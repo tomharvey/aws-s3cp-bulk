@@ -31,9 +31,6 @@ jobs:
       - run:
           name: deploy
           command: serverless deploy --stage production
-      - run:
-          name: verify
-          command: serverless invoke --function hello
 workflows:
   version: 2
   test-deploy:
