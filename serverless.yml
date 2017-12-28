@@ -14,8 +14,6 @@ package:
     - .circleci/**
 
 functions:
-  hello:
-    handler: handler.hello
   copy:
     handler: handler.cp
     events:
