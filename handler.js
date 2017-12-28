@@ -18,7 +18,10 @@ module.exports.bulk_cp = (event, context, callback) => {
   var params = {
     FunctionName: 'aws-s3cp-bulk-production-copy',
     InvocationType: 'Event',
-    Payload: 'tom'
+    Payload: {
+      ['src1', 'dst1'],
+      ['src2', 'dst2']
+    }
   };
 
   var lambda = new AWS.Lambda();
