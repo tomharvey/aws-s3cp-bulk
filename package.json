@@ -1,0 +1,16 @@
+{
+  "name": "aws-s3cp-bulk",
+  "version": "1.0.0",
+  "description": "Copy each file, in a list of files, from one bucket to another.",
+  "main": "handler.js",
+  "dependencies": {
+    "aws-sdk": "^2.175.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": ""
+  },
+  "author": "Tom Harvey",
+  "license": "ISC",
+  "repository": "github:tomharvey/aws-s3cp-bulk"
+}
