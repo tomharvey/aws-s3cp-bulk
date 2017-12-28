@@ -6,9 +6,11 @@
   "dependencies": {
     "aws-sdk": "^2.175.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  },
   "scripts": {
-    "test": ""
+    "test": "find ./tests -name '*_test.js' | xargs mocha --timeout 15000 -R spec"
   },
   "author": "Tom Harvey",
   "license": "ISC",
