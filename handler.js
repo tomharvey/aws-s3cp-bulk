@@ -13,10 +13,11 @@ module.exports.cp = (event, context, callback) => {
 module.exports.bulk_cp = (event, context, callback) => {
   console.log(event);
   console.log(context);
+  console.log("Invoking")
 
   var params = {
     FunctionName: 'aws-s3cp-bulk-production-copy',
-    InvocationType: 'Event',
+    // InvocationType: 'Event',
     Payload: JSON.stringify({
       src: 'foo',
       dst: 'bar'
@@ -24,5 +25,14 @@ module.exports.bulk_cp = (event, context, callback) => {
   };
 
   var lambda = new AWS.Lambda();
-  lambda.invoke(params, callback);
+  lambda.invoke(params, function(err, data) {
+    console.log("Invoked")
+    if (err) {
+      console.log(err, err.stack);
+    }
+    else{
+      console.log(data);
+    }
+    callback(err, data);
+  });
 }
