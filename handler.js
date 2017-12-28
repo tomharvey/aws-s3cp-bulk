@@ -1,5 +1,8 @@
 'use strict';
 
+const AWS = require('aws-sdk');
+
+
 module.exports.cp = (event, context, callback) => {
   console.log(event)
   console.log(context)
