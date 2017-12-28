@@ -30,7 +30,7 @@ jobs:
           command: sudo npm install -g serverless
       - run:
           name: deploy
-          command: serverless deploy
+          command: serverless deploy --stage production
       - run:
           name: verify
           command: serverless invoke --function hello
