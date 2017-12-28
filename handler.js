@@ -10,9 +10,9 @@ module.exports.cp = (event, context, callback) => {
 module.exports.bulk_cp = (event, context, callback) => {
   console.log(event);
   console.log(context);
-
+  console.log("Invoking")
   var params = {
-    FunctionName: 'copy',
+    FunctionName: 'aws-s3cp-bulk-production-copy',
     InvocationType: Event,
     Payload: 'tom'
   };
