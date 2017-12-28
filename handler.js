@@ -19,9 +19,9 @@ module.exports.bulk_cp = (event, context, callback) => {
     FunctionName: 'aws-s3cp-bulk-production-copy',
     InvocationType: 'Event',
     Payload: {
-      "files": [
-        ["src1", "dst1"],
-        ["src2", "dst2"]
+      'files': [
+        ['src1', 'dst1'],
+        ['src2', 'dst2']
       ]
     }
   };
