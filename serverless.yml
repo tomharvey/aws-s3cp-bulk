@@ -16,7 +16,5 @@ package:
 functions:
   copy:
     handler: handler.cp
-    events:
-      - sns:
-        topicName: copy
-        displayName: Copy one src file to the dst
+  bulk_copy:
+    handler: handler.bulk_cp
