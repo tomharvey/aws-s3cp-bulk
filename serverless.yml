@@ -18,3 +18,8 @@ functions:
     handler: handler.cp
   bulk_copy:
     handler: handler.bulk_cp
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          lambda:InvokeFunction
+        Resource: arn:aws:lambda:eu-west-1:006483271430:function:aws-s3cp-bulk-production-copy
