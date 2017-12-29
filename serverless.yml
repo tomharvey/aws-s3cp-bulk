@@ -12,6 +12,10 @@ provider:
       Action:
         - lambda:InvokeFunction
       Resource: "arn:aws:lambda:eu-west-1:006483271430:function:aws-s3cp-bulk-production-copy"
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "arn:aws:aws-s3cp-bulk-006483271430-testfixturesbucket/*"
 
 
 package:

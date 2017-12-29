@@ -40,6 +40,8 @@ module.exports.manager = (event, context, callback) => {
   };
   const invokeQueue = async.queue(queueWorker, concurrency)
 
-  invokeQueue.push({src: 'foo', dst: 'bar'}, this_callback)
-  invokeQueue.push({src: 'baz', dst: 'bat'}, this_callback)
+  const testbucket = "aws-s3cp-bulk-006483271430-testfixturesbucket"
+
+  invokeQueue.push({src: "s3://" + testbucket + "/testfile_in", dst: "s3://" + testbucket + "/testfile_out2"}, this_callback)
+  invokeQueue.push({src: "s3://" + testbucket + "/testfile_out", dst: "s3://" + testbucket + "/testfile_out3"}, this_callback)
 }
