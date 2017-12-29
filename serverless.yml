@@ -5,11 +5,11 @@ provider:
   name: aws
   runtime: nodejs6.10
   region: ${opt:region, 'eu-west-1'}
-  memorySize: ${opt:memorySize, 128}
-  timeout: ${opt:timeout, 30}
+  memorySize: 128
+  timeout: 30
   environment:
-    LAMBDA_CONCURRENCY: ${opt:lambdaConcurrency, 500}
-    BATCH_SIZE: ${opt:batchSize, 1}
+    LAMBDA_CONCURRENCY: ${opt:LAMBDA_CONCURRENCY, 500}
+    BATCH_SIZE: ${opt:BATCH_SIZE, 1}
   iamRoleStatements:
     - Effect: Allow
       Action:
