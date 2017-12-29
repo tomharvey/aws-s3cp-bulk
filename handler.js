@@ -44,4 +44,5 @@ module.exports.manager = (event, context, callback) => {
 
   invokeQueue.push({src: "s3://" + testbucket + "/testfile_in", dst: "s3://" + testbucket + "/testfile_out2"}, this_callback)
   invokeQueue.push({src: "s3://" + testbucket + "/testfile_out", dst: "s3://" + testbucket + "/testfile_out3"}, this_callback)
+  invokeQueue.push({src: "foo", dst: "bar"}, this_callback)
 }
