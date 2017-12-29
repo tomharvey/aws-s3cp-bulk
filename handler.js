@@ -24,7 +24,7 @@ module.exports.cp = (event, context, callback) => {
 module.exports.manager = (event, context, callback) => {
   console.log(event);
   invoke('foo', 'bar', function(err, data) {
-    console.log("Returned")
+    console.log("Returned" + data.payload)
     console.log(err, data)
 
     return callback(err, data);
