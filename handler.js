@@ -9,8 +9,7 @@ const invoke = require('./lib/invoke');
 
 
 module.exports.cp = (event, context, callback) => {
-  console.log(context)
-  console.log(callback)
+  console.log(event)
 
   const [src, dst] = verification(event)
 
