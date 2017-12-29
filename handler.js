@@ -23,11 +23,21 @@ module.exports.cp = (event, context, callback) => {
 
 module.exports.manager = (event, context, callback) => {
   console.log(event);
-  invoke('foo', 'bar', function(err, data) {
+
+  const this_callback = (err, data) {
     console.log("Returned" + data.Payload)
     console.log(data.Payload)
     console.log(err, data)
 
     return callback(err, data);
-  })
+  }
+
+  const concurrency = 2;
+  const queueWorker = (taskdata, callback) => {
+    invoke(taskdata.src, taskdata.dst, callback);
+  };
+  const invokeQueue = async.queue(queueWorker, concurrency)
+
+  invokeQueue.push({src: 'foo', dst: 'bar'}, this_callback)
+  invokeQueue.push({src: 'baz', dst: 'bat'}, this_callback)
 }

@@ -4,6 +4,7 @@
   "description": "Copy each file, in a list of files, from one bucket to another.",
   "main": "handler.js",
   "dependencies": {
+    "async": "^2.6.0",
     "aws-sdk": "^2.175.0",
     "url-parse": "^1.2.0"
   },
