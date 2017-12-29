@@ -22,5 +22,5 @@ package:
 functions:
   copy:
     handler: handler.cp
-  copy_manager:
+  manager:
     handler: handler.manager
