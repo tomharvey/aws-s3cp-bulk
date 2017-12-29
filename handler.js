@@ -18,7 +18,7 @@ module.exports.cp = (event, context, callback) => {
     return callback(err, data);
   }
 
-  if (src && dst) copy(event.src, event.dst, this_callback)
+  if (src && dst) copy.one(event.src, event.dst, this_callback)
     else this_callback(new Error("The source and/or destination were not valid"), event)
 }
 
@@ -33,7 +33,7 @@ module.exports.manager = (event, context, callback) => {
     return callback(err, data);
   }
 
-  const concurrency = 2;
+  const concurrency = 500;
   const queueWorker = (taskdata, callback) => {
     invoke(taskdata.src, taskdata.dst, callback);
   };

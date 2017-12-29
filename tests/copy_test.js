@@ -15,17 +15,17 @@ describe('Copy', () => {
         })
     });
 
-    // it('should be able to copy a file', (done) => {
-    //     const testbucket = "aws-s3cp-bulk-006483271430-testfixturesbucket"
-    //     const src = "s3://" + testbucket + "/testfile_in"
-    //     const dst = "s3://" + testbucket + "/testfile_out"
+    it('should be able to copy a file', (done) => {
+        const testbucket = "aws-s3cp-bulk-006483271430-testfixturesbucket"
+        const src = "s3://" + testbucket + "/testfile_in"
+        const dst = "s3://" + testbucket + "/testfile_out"
 
-    //     const callback = (err, data) => {
-    //         expect(err).to.equal(null)
-    //         expect(data).to.have.all.keys('CopyObjectResult')
+        const callback = (err, data) => {
+            expect(err).to.equal(null)
+            expect(data).to.have.all.keys('CopyObjectResult')
 
-    //         done();
-    //     }
-    //     copy(src, dst, callback)
-    // })
+            done();
+        }
+        copy.one(src, dst, callback)
+    })
 })
