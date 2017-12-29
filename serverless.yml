@@ -5,8 +5,11 @@ provider:
   name: aws
   runtime: nodejs6.10
   region: ${opt:region, 'eu-west-1'}
-  memorySize: 128
-  timeout: 30
+  memorySize: ${opt:memorySize, 128}
+  timeout: ${opt:timeout, 30}
+  environment:
+    LAMBDA_CONCURRENCY: ${opt:lambdaConcurrency, 500}
+    BATCH_SIZE: ${opt:batchSize, 1}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -22,5 +25,5 @@ package:
 functions:
   copy:
     handler: handler.cp
-  bulk_copy:
-    handler: handler.bulk_cp
+  copy_manager:
+    handler: handler.manager

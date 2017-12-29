@@ -1,6 +1,7 @@
 'use strict';
 
 const AWS = require('aws-sdk');
+var copy = require('../lib/copy');
 
 
 module.exports.cp = (event, context, callback) => {
@@ -8,10 +9,12 @@ module.exports.cp = (event, context, callback) => {
   console.log(event)
   console.log(context)
 
-  callback(null, false)
+  const [src, dst] = verification(valid_event)
+  if (src && dst) copy(event.src, event.dst, callback)
+    else callback(new Error("The source and/or destination were not valid"), event)
 }
 
-module.exports.bulk_cp = (event, context, callback) => {
+module.exports.manager = (event, context, callback) => {
   console.log(event);
   console.log(context);
   console.log("Invoking")
