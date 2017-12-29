@@ -15,7 +15,7 @@ provider:
     - Effect: Allow
       Action:
         - s3:*
-      Resource: "arn:aws:aws-s3cp-bulk-006483271430-testfixturesbucket/*"
+      Resource: "arn:aws:s3:::aws-s3cp-bulk-006483271430-testfixturesbucket/*"
 
 
 package:
