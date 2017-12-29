@@ -52,7 +52,8 @@
                            ],
                            "Resource": [
                                { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-*-", "serverlessdeploymentbuck*"] ]},
-                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-", {"Ref" : "AWS::AccountId"}, "-", "testfixturesbucket"] ]}
+                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-", {"Ref" : "AWS::AccountId"}, "-", "testfixturesbucket"] ]},
+                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-", {"Ref" : "AWS::AccountId"}, "-", "testfixturesbucket/*"] ]}
                            ]
                        },
                        {
