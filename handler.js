@@ -1,6 +1,8 @@
 'use strict';
 
 const AWS = require('aws-sdk');
+const async = require('async');
+
 const copy = require('./lib/copy');
 const verification = require('./lib/verification');
 const invoke = require('./lib/invoke');
