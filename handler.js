@@ -24,7 +24,7 @@ module.exports.cp = (event, context, callback) => {
 module.exports.manager = (event, context, callback) => {
   console.log(event);
 
-  const this_callback = (err, data) {
+  const this_callback = (err, data) => {
     console.log("Returned" + data.Payload)
     console.log(data.Payload)
     console.log(err, data)
