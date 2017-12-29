@@ -7,11 +7,16 @@ const invoke = require('./lib/invoke');
 
 
 module.exports.cp = (event, context, callback) => {
+  console.log(context)
+  console.log(callback)
+
   const [src, dst] = verification(event)
 
   const this_callback = (err, data) => {
+    console.log("callback returning...")
     return callback(err, data);
   }
+
   if (src && dst) copy(event.src, event.dst, this_callback)
     else this_callback(new Error("The source and/or destination were not valid"), event)
 }
@@ -19,7 +24,9 @@ module.exports.cp = (event, context, callback) => {
 module.exports.manager = (event, context, callback) => {
   console.log(event);
   invoke('foo', 'bar', function(err, data) {
-    if (err) console.error(err);
+    console.log("Returned")
+    console.log(err, data)
+
     return callback(err, data);
   })
 }
