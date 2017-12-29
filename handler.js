@@ -10,7 +10,7 @@ module.exports.cp = (event, context, callback) => {
   console.log(event)
   console.log(context)
 
-  const [src, dst] = verification(valid_event)
+  const [src, dst] = verification(event)
   if (src && dst) copy(event.src, event.dst, callback)
     else callback(new Error("The source and/or destination were not valid"), event)
 }
