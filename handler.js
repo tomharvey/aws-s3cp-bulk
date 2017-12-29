@@ -1,7 +1,7 @@
 'use strict';
 
 const AWS = require('aws-sdk');
-var copy = require('../lib/copy');
+const copy = require('./lib/copy');
 
 
 module.exports.cp = (event, context, callback) => {
