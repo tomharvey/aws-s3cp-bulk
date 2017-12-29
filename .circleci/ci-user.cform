@@ -8,7 +8,13 @@
       }
    },
    "Resources" : {
-      "IamSssDeployAccessKey": {
+        "TestFixturesBucket" : {
+            "Type" : "AWS::S3::Bucket",
+            "Properties" : {
+                "BucketName" : { "Fn::Join" : ["", [{"Ref" : "ServiceName"}, "-", {"Ref" : "AWS::AccountId"}, "-", "testfixturesbucket"] ]}
+            }
+        },
+        "IamSssDeployAccessKey": {
             "Type": "AWS::IAM::AccessKey",
             "Properties": {
                 "UserName": {"Ref": "IamSssDeployUser"}
@@ -45,7 +51,8 @@
                                "s3:*"
                            ],
                            "Resource": [
-                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-*-", "serverlessdeploymentbuck*"] ]}
+                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-*-", "serverlessdeploymentbuck*"] ]},
+                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-", {"Ref" : "AWS::AccountId"}, "-", "testfixturesbucket"] ]}
                            ]
                        },
                        {
@@ -106,6 +113,10 @@
         "SecretAccessKey": {
             "Description": "SecretAccessKey for permission to deploy the lambda service",
             "Value": {"Fn::GetAtt": [ "IamSssDeployAccessKey", "SecretAccessKey" ] }
+        },
+        "TestFixturesBucket": {
+          "Description": "Name of the bucket to hold integration test fixtures",
+          "Value": {"Ref": "TestFixturesBucket"}
         }
     }
 }
