@@ -7,9 +7,6 @@ provider:
   region: ${opt:region, 'eu-west-1'}
   memorySize: 128
   timeout: 30
-  environment:
-    LAMBDA_CONCURRENCY: ${opt:LAMBDA_CONCURRENCY, 500}
-    BATCH_SIZE: ${opt:BATCH_SIZE, 1}
   iamRoleStatements:
     - Effect: Allow
       Action:
