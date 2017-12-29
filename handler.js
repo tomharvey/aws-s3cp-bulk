@@ -10,8 +10,8 @@ module.exports.cp = (event, context, callback) => {
   console.log(context)
 
   const [src, dst] = verification(valid_event)
-  if (src && dst) copy(event.src, event.dst, callback)
-    else callback(new Error("The source and/or destination were not valid"), event)
+  // if (src && dst) copy(event.src, event.dst, callback)
+  //   else callback(new Error("The source and/or destination were not valid"), event)
 }
 
 module.exports.manager = (event, context, callback) => {
