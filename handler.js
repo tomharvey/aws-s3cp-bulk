@@ -20,7 +20,7 @@ module.exports.cp = (event, context, callback) => {
   const [src, dst] = verification(event)
 
   const this_callback = (err, data) => {
-    return callback(err, data);
+    return callback(JSON.stringify(err), data);
   }
 
   if (src && dst) copy.one(event.src, event.dst, this_callback)
@@ -34,8 +34,7 @@ module.exports.manager = (event, context, callback) => {
 
   const this_callback = (err, data) => {
     var payload = JSON.parse(data.Payload);
-    console.log(err);
-    console.log(data);
+    console.log(payload);
 
     if(payload['errorMessage']) {
       var result = [payload['errorMessage']['src'], payload['errorMessage']['dst'], "error", payload['errorMessage']['message'] ];
@@ -44,7 +43,7 @@ module.exports.manager = (event, context, callback) => {
       var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
     }
 
-    results.push(payload);
+    results.push(result);
 
     return callback(err, data);
   }
