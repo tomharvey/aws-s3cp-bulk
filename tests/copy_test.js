@@ -38,7 +38,6 @@ describe('Copy', () => {
         const callback = (err, data) => {
             expect(err.message).to.equal("The specified key does not exist.")
             expect(err.code).to.equal("NoSuchKey")
-            assert.containsAllKeys((err), ['src', 'dst'])
 
             done();
         }
