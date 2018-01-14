@@ -8,6 +8,14 @@ const verification = require('./lib/verification');
 const invoke = require('./lib/invoke');
 
 
+function MyError(message, src, dst){
+    this.message = message;
+    this.src = src;
+    this.dst = dst;
+}
+
+MyError.prototype = new Error();
+
 module.exports.cp = (event, context, callback) => {
   const [src, dst] = verification(event)
 
@@ -15,11 +23,13 @@ module.exports.cp = (event, context, callback) => {
     console.log("Callingback")
     console.log(data)
     console.log(err)
-    return callback(JSON.stringify(err), data);
+    return callback(JSON.stringify(err));
   }
 
   if (src && dst) copy.one(event.src, event.dst, this_callback)
-    else this_callback(new Error("The source and/or destination were not valid"))
+    else {
+      this_callback(new MyError("The source and/or destination were not valid", "foo", "baz"))
+    }
 }
 
 module.exports.manager = (event, context, callback) => {
