@@ -25,7 +25,7 @@ module.exports.cp = (event, context, callback) => {
 module.exports.manager = (event, context, callback) => {
   console.log(event);
 
-  results = []
+  var results = [];
 
   const this_callback = (err, data) => {
     console.log("Returned" + data.Payload)
@@ -33,9 +33,9 @@ module.exports.manager = (event, context, callback) => {
     console.log(err, data)
 
     if(err):
-      result = [data['src'], data['dst'], err['message']]
+      var result = [data['src'], data['dst'], err['message']];
     else:
-      result = [data['src'], data['dst'], data['CopyObjectResult']['ETag']]
+      var result = [data['src'], data['dst'], data['CopyObjectResult']['ETag']];
 
     results.push(result);
 
@@ -54,6 +54,6 @@ module.exports.manager = (event, context, callback) => {
   invokeQueue.push({src: "s3://" + testbucket + "/testfile_out", dst: "s3://" + testbucket + "/testfile_out3"}, this_callback)
   invokeQueue.push({src: "foo", dst: "bar"}, this_callback)
 
-  console.log("Results:")
-  console.log(results)
+  console.log("Results:");
+  console.log(results);
 }
