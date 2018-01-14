@@ -32,17 +32,17 @@ module.exports.cp = (event, context, callback) => {
 }
 
 module.exports.manager = (event, context, callback) => {
-  var results = [];
+  let results = [];
 
   const this_callback = (err, data) => {
-    var payload = JSON.parse(data.Payload);
+    const payload = JSON.parse(data.Payload);
 
     if(payload['errorMessage']) {
-      var error = JSON.parse(payload['errorMessage']);
-      var result = [error, error, "error", error['message'] ];
+      const error = JSON.parse(payload['errorMessage']);
+      const result = [error['extra']['src'], error['extra']['dst'], "error", error['message'] ];
     }
     else {
-      var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
+      const result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
     }
 
     results.push(result);
