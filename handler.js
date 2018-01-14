@@ -27,7 +27,7 @@ module.exports.cp = (event, context, callback) => {
 
   if (src && dst) copy.one(event.src, event.dst, this_callback)
     else {
-      this_callback(new CopyError("The source and/or destination were not valid", {src, dst}))
+      this_callback(new CopyError("The source and/or destination were not valid", {"src": event.src, "dst": event.dst}))
     }
 }
 
@@ -39,11 +39,10 @@ module.exports.manager = (event, context, callback) => {
 
     if(payload['errorMessage']) {
       const error = JSON.parse(payload['errorMessage']);
-      console.log(error['extra']);
-      const result = [error['extra']['src'], error['extra']['dst'], "error", error['message'] ];
+      const result = [ error['extra']['src'], error['extra']['dst'], "error", error['message'] ];
     }
     else {
-      const result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
+      const result = [ payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag'] ];
     }
 
     results.push(result);
