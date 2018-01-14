@@ -9,12 +9,9 @@ const invoke = require('./lib/invoke');
 
 
 module.exports.cp = (event, context, callback) => {
-  console.log(event)
-
   const [src, dst] = verification(event)
 
   const this_callback = (err, data) => {
-    console.log("callback returning...")
     return callback(err, data);
   }
 
@@ -23,24 +20,17 @@ module.exports.cp = (event, context, callback) => {
 }
 
 module.exports.manager = (event, context, callback) => {
-  console.log(event);
-
   var results = [];
 
   const this_callback = (err, data) => {
-    console.log("Returned" + data.Payload)
-    console.log(data.Payload)
     console.log(err, data)
 
-    // if(err):
-    //   var result = [data['src'], data['dst'], err['message']];
-    // else:
-    //   var result = [data['src'], data['dst'], data['CopyObjectResult']['ETag']];
+    if(err):
+      var result = [data.Payload['src'], data.Payload['dst'], err['message']];
+    else:
+      var result = [data.Payload['src'], data.Payload['dst'], data.Payload['CopyObjectResult']['ETag']];
 
-    results.push(data);
-
-    console.log("Results:");
-    console.log(results);
+    results.push(result);
 
     return callback(err, data);
   }
@@ -57,6 +47,8 @@ module.exports.manager = (event, context, callback) => {
   invokeQueue.push({src: "s3://" + testbucket + "/testfile_out", dst: "s3://" + testbucket + "/testfile_out3"}, this_callback)
   invokeQueue.push({src: "foo", dst: "bar"}, this_callback)
 
-  // console.log("Results:");
-  // console.log(results);
+  invokeQueue.drain = function() {
+    console.log("CompletedResults:");
+    console.log(results);
+  };
 }
