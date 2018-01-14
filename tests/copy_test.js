@@ -30,14 +30,15 @@ describe('Copy', () => {
         copy.one(src, dst, callback)
     });
 
-    it('should report copy errors', (done) => {
+    it('should report copy errors as successful run', (done) => {
         const testbucket = "aws-s3cp-bulk-006483271430-testfixturesbucket"
         const src = "s3://" + testbucket + "/non-existant-file-input"
         const dst = "s3://" + testbucket + "/non-existant-file-output"
 
         const callback = (err, data) => {
-            expect(err.message).to.equal("The specified key does not exist.")
-            expect(err.code).to.equal("NoSuchKey")
+            expect(data.message).to.equal("The specified key does not exist.")
+            expect(data.code).to.equal("NoSuchKey")
+            expect(data.src).to.equal(src)
 
             done();
         }
