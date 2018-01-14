@@ -36,6 +36,8 @@ module.exports.manager = (event, context, callback) => {
     // else {
     //   var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
     // }
+
+    if(payload['errorMessage']) console.log(payload['errorMessage'])
     var result = payload;
 
     results.push(result);
