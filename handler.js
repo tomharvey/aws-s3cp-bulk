@@ -20,7 +20,8 @@ module.exports.cp = (event, context, callback) => {
   const [src, dst] = verification(event)
 
   const this_callback = (err, data) => {
-    return callback(JSON.stringify(err), data);
+    if(err) return callback(JSON.stringify(err), data);
+      else return callback(null, data)
   }
 
   if (src && dst) copy.one(event.src, event.dst, this_callback)
