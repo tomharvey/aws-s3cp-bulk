@@ -13,12 +13,12 @@ module.exports.cp = (event, context, callback) => {
 
   const this_callback = (err, data) => {
     console.log("Callingback")
+    console.log(data)
     if(err){
       err.src = data.src;
       err.dst = data.dst;
     }
     console.log(err)
-    console.log(data)
     return callback(err, data);
   }
 
