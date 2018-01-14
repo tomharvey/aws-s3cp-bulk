@@ -6,7 +6,7 @@ const async = require('async');
 const copy = require('./lib/copy');
 const verification = require('./lib/verification');
 const invoke = require('./lib/invoke');
-const CopyError = require('./errors/copy-error');
+const CopyError = require('./lib/copy-error');
 
 
 function MyError(message, src, dst){
