@@ -12,6 +12,9 @@ module.exports.cp = (event, context, callback) => {
   const [src, dst] = verification(event)
 
   const this_callback = (err, data) => {
+    console.log("Callingback")
+    console.log(err)
+    console.log(data)
     return callback(err, data);
   }
 
@@ -28,7 +31,7 @@ module.exports.manager = (event, context, callback) => {
     var payload = JSON.parse(data.Payload);
 
     if(payload['errorMessage']) {
-      var result = [payload['src'], payload['dst'], "err", payload['errorMessage']];
+      var result = [payload['src'], payload['dst'], "error", payload['errorMessage']];
     }
     else {
       var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
