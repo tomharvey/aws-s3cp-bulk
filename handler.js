@@ -7,6 +7,7 @@ const copy = require('./lib/copy');
 const verification = require('./lib/verification');
 const invoke = require('./lib/invoke');
 const CopyError = require('./lib/copy-error');
+const summary = require("./lib/report-summary")
 
 
 function MyError(message, src, dst){
@@ -39,11 +40,10 @@ module.exports.integration_test = (event, context, callback) => {
 
     let result = [];
     if(payload['errorMessage']) {
-      const error = JSON.parse(payload['errorMessage']);
-      result = [ error.extra.src, error.extra.dst, "error", error.message ];
+      result = summary.get_result_from_error(payload['errorMessage'])
     }
     else {
-      result = [ payload.src, payload.dst, "success", payload['CopyObjectResult']['ETag'] ];
+      result = summary.get_result_from_success(payload);
     }
 
     results.push(result);
@@ -63,6 +63,10 @@ module.exports.integration_test = (event, context, callback) => {
   invokeQueue.push({src: "foo", dst: "bar"}, this_callback)
 
   invokeQueue.drain = function() {
-    return callback(null, results);
+    report = {
+      "summary": summary(results),
+      results,
+    }
+    return callback(null, report);
   };
 }
