@@ -26,10 +26,10 @@ module.exports.manager = (event, context, callback) => {
     console.log(err, data);
 
     if(data.Payload['errorMessage']) {
-      var result = [data.Payload['src'], data.Payload['dst'], data.Payload['errorMessage']];
+      var result = [data.Payload['src'], data.Payload['dst'], "err", data.Payload];
     }
     else {
-      var result = [data.Payload['src'], data.Payload['dst'], data.Payload['CopyObjectResult']['ETag']];
+      var result = [data.Payload['src'], data.Payload['dst'], "success", data.Payload];
     }
 
     results.push(result);
