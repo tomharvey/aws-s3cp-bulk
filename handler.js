@@ -13,8 +13,10 @@ module.exports.cp = (event, context, callback) => {
 
   const this_callback = (err, data) => {
     console.log("Callingback")
-    err.src = data.src;
-    err.dst = data.dst;
+    if(err){
+      err.src = data.src;
+      err.dst = data.dst;
+    }
     console.log(err)
     console.log(data)
     return callback(err, data);
@@ -28,9 +30,9 @@ module.exports.manager = (event, context, callback) => {
   var results = [];
 
   const this_callback = (err, data) => {
-    console.log(err, data);
-
     var payload = JSON.parse(data.Payload);
+    console.log(err);
+    console.log(data);
 
     if(payload['errorMessage']) {
       var result = [payload['src'], payload['dst'], "error", payload['errorMessage']];
