@@ -35,13 +35,13 @@ module.exports.manager = (event, context, callback) => {
   const this_callback = (err, data) => {
     var payload = JSON.parse(data.Payload);
 
-    if(payload['errorMessage']) {
-      var error = JSON.parse(payload['errorMessage']);
-      var result = [error['src'], error['dst'], "error", error['message'] ];
-    }
-    else {
-      var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
-    }
+    // if(payload['errorMessage']) {
+    //   var error = JSON.parse(payload['errorMessage']);
+    //   var result = [error['src'], error['dst'], "error", error['message'] ];
+    // }
+    // else {
+    //   var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
+    // }
 
     results.push(payload);
 
