@@ -25,6 +25,8 @@ module.exports.manager = (event, context, callback) => {
   const this_callback = (err, data) => {
     console.log(err, data);
 
+    console.log(typeof data.Payload)
+
     if(data.Payload['errorMessage']) {
       var result = [data.Payload['src'], data.Payload['dst'], "err", data.Payload];
     }
