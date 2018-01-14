@@ -48,7 +48,7 @@ module.exports.integration_test = (event, context, callback) => {
 
     results.push(result);
 
-    return callback(err, data);
+    // return callback(err, data);
   }
 
   const concurrency = 500;

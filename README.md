@@ -1,5 +1,7 @@
 # AWS S3 Copy in Bulk
 
+** Work in progress **
+
 Copy each file, in a list of files, from one bucket to another.
 
 Largely created out of need, but somewhat, to expore how to distribute workload to new Lambda functions.
