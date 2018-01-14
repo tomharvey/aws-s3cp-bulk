@@ -8,13 +8,13 @@ const verification = require('./lib/verification');
 const invoke = require('./lib/invoke');
 
 
-function CopyError(message, src, dst){
+function MyError(message, src, dst){
     this.message = message;
     this.src = src;
     this.dst = dst;
 }
 
-CopyError.prototype = new Error();
+MyError.prototype = new Error();
 
 module.exports.cp = (event, context, callback) => {
   const [src, dst] = verification(event)
@@ -25,7 +25,7 @@ module.exports.cp = (event, context, callback) => {
 
   if (src && dst) copy.one(event.src, event.dst, this_callback)
     else {
-      this_callback(new CopyError("The source and/or destination were not valid", "foo", "baz"))
+      this_callback(new MyError("The source and/or destination were not valid", "foo", "baz"))
     }
 }
 
