@@ -15,7 +15,7 @@ module.exports.cp = (event, context, callback) => {
 
   const this_callback = (err, data) => {
     console.log("callback returning...")
-    data['parentEvent'] = event;
+    data['Payload']['parentEvent'] = event;
     return callback(err, data);
   }
 
