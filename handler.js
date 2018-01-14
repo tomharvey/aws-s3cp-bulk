@@ -8,9 +8,8 @@ const verification = require('./lib/verification');
 const invoke = require('./lib/invoke');
 
 
-function CopyError(message, code, src, dst){
+function CopyError(message, src, dst){
     this.message = message;
-    this.code = code;
     this.src = src;
     this.dst = dst;
 }
@@ -26,7 +25,7 @@ module.exports.cp = (event, context, callback) => {
 
   if (src && dst) copy.one(event.src, event.dst, this_callback)
     else {
-      this_callback(new CopyError("The source and/or destination were not valid", "VerificationError", "foo", "baz"))
+      this_callback(new CopyError("The source and/or destination were not valid", "foo", "baz"))
     }
 }
 
@@ -45,7 +44,7 @@ module.exports.manager = (event, context, callback) => {
       var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
     }
 
-    results.push(result);
+    results.push(payload);
 
     return callback(err, data);
   }
