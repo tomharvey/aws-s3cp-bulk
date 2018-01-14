@@ -39,6 +39,7 @@ module.exports.manager = (event, context, callback) => {
 
     if(payload['errorMessage']) {
       const error = JSON.parse(payload['errorMessage']);
+      console.log(error['extra']);
       const result = [error['extra']['src'], error['extra']['dst'], "error", error['message'] ];
     }
     else {

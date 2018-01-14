@@ -38,8 +38,7 @@ describe('Copy', () => {
         const callback = (err, data) => {
             console.log(err);
             expect(err.message).to.equal("The specified key does not exist.")
-            expect(err.code).to.equal("NoSuchKey")
-            expect(err.src).to.equal(src)
+            expect(err.extra.src).to.equal(src)
 
             done();
         }
