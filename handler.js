@@ -23,12 +23,14 @@ module.exports.manager = (event, context, callback) => {
   var results = [];
 
   const this_callback = (err, data) => {
-    console.log(err, data)
+    console.log(err, data);
 
-    if(err):
+    if(err) {
       var result = [data.Payload['src'], data.Payload['dst'], err['message']];
-    else:
+    }
+    else {
       var result = [data.Payload['src'], data.Payload['dst'], data.Payload['CopyObjectResult']['ETag']];
+    }
 
     results.push(result);
 
