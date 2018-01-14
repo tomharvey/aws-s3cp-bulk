@@ -14,10 +14,6 @@ module.exports.cp = (event, context, callback) => {
   const this_callback = (err, data) => {
     console.log("Callingback")
     console.log(data)
-    if(err){
-      err.src = data.src;
-      err.dst = data.dst;
-    }
     console.log(err)
     return callback(err, data);
   }
@@ -34,12 +30,13 @@ module.exports.manager = (event, context, callback) => {
     console.log(err);
     console.log(data);
 
-    if(payload['errorMessage']) {
-      var result = [payload['src'], payload['dst'], "error", payload['errorMessage']];
-    }
-    else {
-      var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
-    }
+    // if(payload['errorMessage']) {
+    //   var result = [payload['src'], payload['dst'], "error", payload['errorMessage']];
+    // }
+    // else {
+    //   var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
+    // }
+    var result = payload;
 
     results.push(result);
 
