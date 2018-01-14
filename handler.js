@@ -15,11 +15,11 @@ module.exports.cp = (event, context, callback) => {
     console.log("Callingback")
     console.log(data)
     console.log(err)
-    return callback(err, data);
+    return callback(JSON.stringify(err), data);
   }
 
   if (src && dst) copy.one(event.src, event.dst, this_callback)
-    else this_callback(new Error("The source and/or destination were not valid"), event)
+    else this_callback(new Error("The source and/or destination were not valid"))
 }
 
 module.exports.manager = (event, context, callback) => {
