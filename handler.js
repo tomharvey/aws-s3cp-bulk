@@ -18,20 +18,20 @@ function MyError(message, src, dst){
 MyError.prototype = new Error();
 
 module.exports.cp = (event, context, callback) => {
-  const [src, dst] = verification(event)
+  const [src_is_valid, dst_is_valid] = verification(event)
 
   const this_callback = (err, data) => {
     if(err) return callback(JSON.stringify(err), data);
       else return callback(null, data)
   }
 
-  if (src && dst) copy.one(event.src, event.dst, this_callback)
+  if (src_is_valid && dst_is_valid) copy.one(event.src, event.dst, this_callback)
     else {
       this_callback(new CopyError("The source and/or destination were not valid", {"src": event.src, "dst": event.dst}))
     }
 }
 
-module.exports.manager = (event, context, callback) => {
+module.exports.integration_test = (event, context, callback) => {
   let results = [];
 
   const this_callback = (err, data) => {
@@ -40,10 +40,10 @@ module.exports.manager = (event, context, callback) => {
     let result = [];
     if(payload['errorMessage']) {
       const error = JSON.parse(payload['errorMessage']);
-      result = [ error['extra']['src'], error['extra']['dst'], "error", error['message'] ];
+      result = [ error.extra.src, error.extra.dst, "error", error.message ];
     }
     else {
-      result = [ payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag'] ];
+      result = [ payload.src, payload.dst, "success", payload['CopyObjectResult']['ETag'] ];
     }
 
     results.push(result);
@@ -65,7 +65,7 @@ module.exports.manager = (event, context, callback) => {
   invokeQueue.push({src: "foo", dst: "bar"}, this_callback)
 
   invokeQueue.drain = function() {
-    console.log("CompletedResults:");
     console.log(results);
+    return callback(null, results);
   };
 }

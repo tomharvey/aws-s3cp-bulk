@@ -26,5 +26,5 @@ package:
 functions:
   copy:
     handler: handler.cp
-  manager:
-    handler: handler.manager
+  integration_test:
+    handler: handler.integration_test
