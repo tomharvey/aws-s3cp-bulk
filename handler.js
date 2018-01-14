@@ -10,14 +10,6 @@ const CopyError = require('./lib/copy-error');
 const summary = require("./lib/report-summary")
 
 
-function MyError(message, src, dst){
-    this.message = message;
-    this.src = src;
-    this.dst = dst;
-}
-
-MyError.prototype = new Error();
-
 module.exports.cp = (event, context, callback) => {
   const [src_is_valid, dst_is_valid] = verification(event)
 
