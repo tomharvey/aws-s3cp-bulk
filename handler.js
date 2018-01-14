@@ -8,27 +8,25 @@ const verification = require('./lib/verification');
 const invoke = require('./lib/invoke');
 
 
-function MyError(message, src, dst){
+function CopyError(message, code, src, dst){
     this.message = message;
+    this.code = code;
     this.src = src;
     this.dst = dst;
 }
 
-MyError.prototype = new Error();
+CopyError.prototype = new Error();
 
 module.exports.cp = (event, context, callback) => {
   const [src, dst] = verification(event)
 
   const this_callback = (err, data) => {
-    console.log("Callingback")
-    console.log(data)
-    console.log(err)
-    return callback(JSON.stringify(err));
+    return callback(err, data);
   }
 
   if (src && dst) copy.one(event.src, event.dst, this_callback)
     else {
-      this_callback(new MyError("The source and/or destination were not valid", "foo", "baz"))
+      this_callback(new CopyError("The source and/or destination were not valid", "VerificationError", "foo", "baz"))
     }
 }
 
@@ -40,15 +38,12 @@ module.exports.manager = (event, context, callback) => {
     console.log(err);
     console.log(data);
 
-    // if(payload['errorMessage']) {
-    //   var result = [payload['src'], payload['dst'], "error", payload['errorMessage']];
-    // }
-    // else {
-    //   var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
-    // }
-
-    if(payload['errorMessage']) console.log(payload['errorMessage'])
-    var result = payload;
+    if(payload['errorMessage']) {
+      var result = [payload['errorMessage']['src'], payload['errorMessage']['dst'], "error", payload['errorMessage']['message'] ];
+    }
+    else {
+      var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
+    }
 
     results.push(result);
 
