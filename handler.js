@@ -43,7 +43,7 @@ module.exports.manager = (event, context, callback) => {
       var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
     }
 
-    results.push(result);
+    results.push(payload);
 
     return callback(err, data);
   }
