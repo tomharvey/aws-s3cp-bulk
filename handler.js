@@ -47,8 +47,6 @@ module.exports.integration_test = (event, context, callback) => {
     }
 
     results.push(result);
-
-    // return callback(err, data);
   }
 
   const concurrency = 500;
@@ -65,7 +63,6 @@ module.exports.integration_test = (event, context, callback) => {
   invokeQueue.push({src: "foo", dst: "bar"}, this_callback)
 
   invokeQueue.drain = function() {
-    console.log(results);
     return callback(null, results);
   };
 }
