@@ -1,5 +1,6 @@
 var chai = require('chai');
 var expect = chai.expect;
+var assert = chai.assert
 
 var copy = require('../lib/copy');
 
@@ -22,7 +23,22 @@ describe('Copy', () => {
 
         const callback = (err, data) => {
             expect(err).to.equal(null)
-            expect(data).to.have.all.keys('CopyObjectResult')
+            assert.containsAllKeys((data), ['CopyObjectResult', 'src', 'dst'])
+
+            done();
+        }
+        copy.one(src, dst, callback)
+    });
+
+    it('should report copy errors', (done) => {
+        const testbucket = "aws-s3cp-bulk-006483271430-testfixturesbucket"
+        const src = "s3://" + testbucket + "/non-existant-file-input"
+        const dst = "s3://" + testbucket + "/non-existant-file-output"
+
+        const callback = (err, data) => {
+            expect(err.message).to.equal("The specified key does not exist.")
+            expect(err.code).to.equal("NoSuchKey")
+            assert.containsAllKeys((data), ['src', 'dst'])
 
             done();
         }
