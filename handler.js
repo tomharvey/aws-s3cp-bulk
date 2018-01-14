@@ -6,6 +6,7 @@ const async = require('async');
 const copy = require('./lib/copy');
 const verification = require('./lib/verification');
 const invoke = require('./lib/invoke');
+const CopyError = require('./errors/copy-error');
 
 
 function MyError(message, src, dst){
@@ -26,7 +27,7 @@ module.exports.cp = (event, context, callback) => {
 
   if (src && dst) copy.one(event.src, event.dst, this_callback)
     else {
-      this_callback(new MyError("The source and/or destination were not valid", "foo", "baz"))
+      this_callback(new CopyError("The source and/or destination were not valid", {src, dst}))
     }
 }
 
@@ -38,7 +39,7 @@ module.exports.manager = (event, context, callback) => {
 
     if(payload['errorMessage']) {
       var error = JSON.parse(payload['errorMessage']);
-      var result = [error['src'], error['dst'], "error", error['message'] ];
+      var result = [error, error, "error", error['message'] ];
     }
     else {
       var result = [payload['src'], payload['dst'], "success", payload['CopyObjectResult']['ETag']];
