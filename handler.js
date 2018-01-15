@@ -25,6 +25,7 @@ module.exports.cp = (event, context, callback) => {
 }
 
 module.exports.integration_test = (event, context, callback) => {
+  // TODO: Move this function into the tests folder
   let results = [];
 
   const this_callback = (err, data) => {
@@ -55,7 +56,7 @@ module.exports.integration_test = (event, context, callback) => {
   invokeQueue.push({src: "foo", dst: "bar"}, this_callback)
 
   invokeQueue.drain = function() {
-    report = {
+    const report = {
       "summary": summary(results),
       results,
     }
