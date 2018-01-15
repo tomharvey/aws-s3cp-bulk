@@ -18,6 +18,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn test
+      - run: codeclimate-test-reporter < lcov.info
 
   deploy:
     docker:
