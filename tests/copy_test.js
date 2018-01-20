@@ -36,7 +36,6 @@ describe('Copy', () => {
         const dst = "s3://" + testbucket + "/non-existant-file-output"
 
         const callback = (err, data) => {
-            console.log(err);
             expect(err).to.exist.and.be.instanceof(Error)
             expect(err.message).to.equal("The specified key does not exist.")
             expect(err.extra.src).to.equal(src)
