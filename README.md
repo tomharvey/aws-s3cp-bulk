@@ -4,7 +4,7 @@
 
 Copy each file, in a list of files, from one bucket to another.
 
-Largely created out of need, but somewhat, to expore how to distribute workload 
+Largely created out of need, but somewhat, to expore how to distribute workload
 to new Lambda functions.
 
 The main endpoint accepts a list of sources and destinations, this function will
