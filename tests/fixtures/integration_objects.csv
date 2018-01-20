@@ -1,0 +1,4 @@
+"s3://aws-s3cp-bulk-006483271430-testfixturesbucket/testfile_in", "s3://aws-s3cp-bulk-006483271430-testfixturesbucket/testfile_out2"
+"s3://aws-s3cp-bulk-006483271430-testfixturesbucket/testfile_out", "s3://aws-s3cp-bulk-006483271430-testfixturesbucket/testfile_out3"
+"s3://aws-s3cp-bulk-006483271430-testfixturesbucket/non-existant-in", "s3://aws-s3cp-bulk-006483271430-testfixturesbucket/non-existant-out"
+"foo","bar"
