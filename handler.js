@@ -20,7 +20,9 @@ module.exports.cp = (event, context, callback) => {
 
   if (src_is_valid && dst_is_valid) copy.one(event.src, event.dst, this_callback)
     else {
-      this_callback(new CopyError("The source and/or destination were not valid", {"src": event.src, "dst": event.dst}))
+      this_callback(
+        new CopyError("The source and/or destination were not valid",
+          {"src": event.src, "dst": event.dst}))
     }
 }
 
@@ -43,7 +45,7 @@ module.exports.integration_test = (event, context, callback) => {
   }
 
   const concurrency = process.env.CONCURRENCY;
-  
+
   const queueWorker = (taskdata, callback) => {
     invoke(taskdata.src, taskdata.dst, callback);
   };
