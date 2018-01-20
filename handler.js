@@ -42,7 +42,8 @@ module.exports.integration_test = (event, context, callback) => {
     results.push(result);
   }
 
-  const concurrency = 500;
+  const concurrency = process.env.CONCURRENCY;
+  
   const queueWorker = (taskdata, callback) => {
     invoke(taskdata.src, taskdata.dst, callback);
   };

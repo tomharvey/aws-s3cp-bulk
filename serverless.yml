@@ -28,3 +28,5 @@ functions:
     handler: handler.cp
   integration_test:
     handler: handler.integration_test
+    environment:
+      CONCURRENCY: ${opt:concurrency, 500}
