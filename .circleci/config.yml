@@ -18,7 +18,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn test
-      - run: npm install codeclimate-test-reporter
+      - run: sudo npm install -g codeclimate-test-reporter
       - run: codeclimate-test-reporter < coverage/lcov.info
 
   deploy:
