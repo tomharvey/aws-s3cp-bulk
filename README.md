@@ -75,10 +75,11 @@ the ETag of the file on success, or the error message if an error occurred.
 
 ## Why the CSV input approach?
 There is a need to feed the command with *large* amounts of data, around
-10million files, each with a destination. This volume of data is too large
-to otherwise feed into the command, and by outputting the results to a file,
-we do not need to ensure rapid response time.
+10million source filenames, each with a destination. This volume of data is too
+large to otherwise feed into the command, and by outputting the results to a
+report file, we do not need to ensure response time is within expected
+request-response cycle timeouts.
 
 With smaller numbers of files, a JSON POST body may suffice, but there is
 as yet no API Gateway to accept this kind of request-response mode of
-operation. Feel free to contribute if you want to add this interface here.
+operation. Feel free to contribute if you want to add this interface.
