@@ -1,38 +1,40 @@
 # AWS S3 Copy in Bulk
 
-**Work in progress**
+**WORK IN PROGRESS**
+
+[![CircleCI](https://circleci.com/gh/tomharvey/aws-s3cp-bulk/tree/master.svg?style=svg)](https://circleci.com/gh/tomharvey/aws-s3cp-bulk/tree/master)
 
 Copy each file, in a list of files, from one bucket to another. Make use of AWS
 Lambda to create many concurrent copy operations and increase speed of
-operations. Use AWS S3 copy command to ensure lowest cost of operations.
+processing. Use AWS S3 copy command to ensure lowest cost of operations.
 
 Created out of a need to move ~10million obects.
 
 The main endpoint accepts a list of sources and destinations, this function will
 asyncrounously send each source/destination pair to another lambda function to
-process that pair. The main function will wait for a response for each pair
-and return the statuses of each.
+process that pair. Once each pair has been processed, the main function will
+return the statuses of each operation and a summary of success/failures.
 
 ## Quickstart
 ### Install
 This function relies on [the Serverless framework](http://serverless.com) to
-operate, so install that with: `npm install -g serverless`.
+operate, so install that with `npm install -g serverless`.
 
-Then, deploy the functions to AWS Lambda with `serverless deploy`
+Then deploy these aws-s3cp-bulk functions to AWS Lambda with `serverless deploy`
 
-### Prepare inputs
-This will create an 'operational bucket' in your AWS account, which will be
-used for the input files, reports and any tests with a name which follows the
-format of `aws-s3cp-bulk-{AWS::Region}-{AWS::AccountId}`. Add a CSV file to
-that bucket, containing a list of the files which you want to copy.
+### Prepare your inputs
+Deployemnt of the functions will create an 'operational bucket' in your AWS
+account, which will be used for the input files and out reports. This bucket is
+named using a format of `aws-s3cp-bulk-{AWS::Region}-{AWS::AccountId}`. Add a
+CSV file to this bucket, containing a list of the files which you want to copy.
 This CSV should have 2 columns:
 
 | source file path | destination file path |
 | --- | --- |
 | s3://bucket-name/file/path.ext | s3://another-bucket-name/file/path_new.ext |
 
-Your file should **NOT** have a header row, the above is to show the format of the file
-and an example.
+Your file should **NOT** have a header row, the above is to show the format of
+the file and an example.
 
 
 ### File and Bucket Permissions
@@ -40,23 +42,35 @@ Before you run the function, you will need to ensure that you grant the function
 appropriate access to the source files and destination bucket. The function will
 operate using a new IAM role, named along the lines of 
 `aws-s3cp-bulk-production-{AWS::Region}-lambdaRole`
-so add permissions to that role which allow read from the source files and write
-to the destination bucket.
+Add permissions to that role to allow read from the source files and write to
+the destination bucket.
 
 ### Run!
 You can now invoke the function using
-`serverless invoke --function bulk-cp --data list_of_files_to_copy.csv`
+
+`serverless invoke --function bulk-cp --data {LIST_OF_FILES_TO_COPY.CSV}`
 
 ### Results
 Results will be generated and written to your 'operational bucket' alongside
 your input file using the naming scheme of
-`./reports/input_name_report_YYYY-MM-DD.json`
+`./reports/{INPUT_NAME}_report_{YYYY-MM-DD}.json`
 
-Inside this file you will find a summary object and a detail list of each file
-copy command result.
+Inside this file you will find a summary object and a detailed list of each file
+copy command's result.
 
 The summary will inform you of the total number of operations, the number of
 successes and the number of failures.
 
-The detail will report the source and destination file pair along with either
+The detail will report the source/destination file pair, along with either
 the ETag of the file on success, or the error message if an error occured.
+
+
+## Why the CSV input approach?
+There is a need to feed the command with *large* amounts of data, around
+10million files, each with a destination. This volume of data is too large
+to otherwise feed into the command, and by outputting the results to a file,
+we do not need to ensure rapid response time.
+
+With smaller numbers of files, a JSON POST body may suffice, but there is
+as yet no API Gateway to accept this kind of request-response mode of
+operation. Feel free to contribute if you want to add this interface here.
