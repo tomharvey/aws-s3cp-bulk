@@ -49,7 +49,7 @@ the file and an example.
 Before you run the function, you will need to ensure that you grant the function
 appropriate access to the source files and destination bucket. The function will
 operate using a new IAM role, named along the lines of 
-`aws-s3cp-bulk-production-{AWS::Region}-lambdaRole`
+`aws-s3cp-bulk-development-{AWS::Region}-lambdaRole`
 Add permissions to that role to allow read from the source files and write to
 the destination bucket.
 
