@@ -61,7 +61,7 @@ You can now invoke the function using
 ### Results
 Results will be generated and written to your 'operational bucket' alongside
 your input file using the naming scheme of
-`./reports/{INPUT_NAME}_report_{YYYY-MM-DD}.json`
+`./reports/{INPUT_NAME}_report_{YYYY-MM-DDTHH:mm:ss}.json`
 
 Inside this file you will find a summary object and a detailed list of each file
 copy command's result.
