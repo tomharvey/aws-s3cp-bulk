@@ -1,6 +1,7 @@
 # AWS S3 Copy in Bulk
 
-**WORK IN PROGRESS**
+**WORK IN PROGRESS** Outstanding work is tracked against the
+[v1.0.0 milestone](https://github.com/tomharvey/aws-s3cp-bulk/milestone/1)
 
 [![CircleCI](https://circleci.com/gh/tomharvey/aws-s3cp-bulk/tree/master.svg?style=svg)](https://circleci.com/gh/tomharvey/aws-s3cp-bulk/tree/master)
 
