@@ -5,15 +5,14 @@
       "ServiceName" : {
          "Description" : "Name of the serverless application's service name as defined in serverless.yml",
          "Type" : "String"
-      }
+      },
+      "OperationalBucketName" : {
+         "Description" : "Name of the bucket which wil hold the input, test and results files from operations",
+         "Type" : "String",
+         "Default" : "aws-s3cp-bulk",
+      },
    },
    "Resources" : {
-        "TestFixturesBucket" : {
-            "Type" : "AWS::S3::Bucket",
-            "Properties" : {
-                "BucketName" : { "Fn::Join" : ["", [{"Ref" : "ServiceName"}, "-", {"Ref" : "AWS::AccountId"}, "-", "testfixturesbucket"] ]}
-            }
-        },
         "IamSssDeployAccessKey": {
             "Type": "AWS::IAM::AccessKey",
             "Properties": {
@@ -52,8 +51,8 @@
                            ],
                            "Resource": [
                                { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-*-", "serverlessdeploymentbuck*"] ]},
-                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-", {"Ref" : "AWS::AccountId"}, "-", "testfixturesbucket"] ]},
-                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-", {"Ref" : "AWS::AccountId"}, "-", "testfixturesbucket/*"] ]}
+                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "OperationalBucketName"}, "-", {"Ref" : "AWS::AccountId"}, "-", {"Ref" : "AWS::Region"}] ]},
+                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "OperationalBucketName"}, "-", {"Ref" : "AWS::AccountId"}, "-", {"Ref" : "AWS::Region"} "/*"] ]}
                            ]
                        },
                        {
@@ -114,10 +113,6 @@
         "SecretAccessKey": {
             "Description": "SecretAccessKey for permission to deploy the lambda service",
             "Value": {"Fn::GetAtt": [ "IamSssDeployAccessKey", "SecretAccessKey" ] }
-        },
-        "TestFixturesBucket": {
-          "Description": "Name of the bucket to hold integration test fixtures",
-          "Value": {"Ref": "TestFixturesBucket"}
         }
     }
 }
