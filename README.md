@@ -4,6 +4,8 @@
 [v1.0.0 milestone](https://github.com/tomharvey/aws-s3cp-bulk/milestone/1)
 
 [![CircleCI](https://circleci.com/gh/tomharvey/aws-s3cp-bulk/tree/master.svg?style=svg)](https://circleci.com/gh/tomharvey/aws-s3cp-bulk/tree/master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d092876ca28a14529d8f/maintainability)](https://codeclimate.com/github/tomharvey/aws-s3cp-bulk/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d092876ca28a14529d8f/test_coverage)](https://codeclimate.com/github/tomharvey/aws-s3cp-bulk/test_coverage)
 
 Copy each file, in a list of files, from one bucket to another. Make use of AWS
 Lambda to create many concurrent copy operations and increase speed of
