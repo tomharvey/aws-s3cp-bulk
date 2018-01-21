@@ -11,10 +11,10 @@ Copy each file, in a list of files, from one bucket to another. Make use of AWS
 Lambda to create many concurrent copy operations and increase speed of
 processing. Use AWS S3 copy command to ensure lowest cost of operations.
 
-Created out of a need to move ~10million obects.
+Created out of a need to move ~10million objects.
 
 The main endpoint accepts a list of sources and destinations, this function will
-asyncrounously send each source/destination pair to another lambda function to
+asynchronously send each source/destination pair to another lambda function to
 process that pair. Once each pair has been processed, the main function will
 return the statuses of each operation and a summary of success/failures.
 
@@ -26,9 +26,14 @@ operate, so install that with `npm install -g serverless`.
 Then deploy these aws-s3cp-bulk functions to AWS Lambda with `serverless deploy`
 
 ### Prepare your inputs
-Deployemnt of the functions will create an 'operational bucket' in your AWS
-account, which will be used for the input files and out reports. This bucket is
-named using a format of `aws-s3cp-bulk-{AWS::Region}-{AWS::AccountId}`. Add a
+The function expects a CSV which contains a list of source and destination files
+for the copy command. How you create this list will depend on your specific
+circumstances, but this file must be uploaded to S3 and made available to the
+function. To do this, upload the file to your 'operational bucket'.
+
+Deployment of the functions will create an 'operational bucket' in your AWS
+account, which will be used for the input files and output reports. This bucket
+is named using a format of `aws-s3cp-bulk-{AWS::Region}-{AWS::AccountId}`. Add a
 CSV file to this bucket, containing a list of the files which you want to copy.
 This CSV should have 2 columns:
 
@@ -65,7 +70,7 @@ The summary will inform you of the total number of operations, the number of
 successes and the number of failures.
 
 The detail will report the source/destination file pair, along with either
-the ETag of the file on success, or the error message if an error occured.
+the ETag of the file on success, or the error message if an error occurred.
 
 
 ## Why the CSV input approach?
