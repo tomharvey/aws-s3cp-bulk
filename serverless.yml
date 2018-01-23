@@ -16,7 +16,6 @@ provider:
   timeout: 30
   environment:
     OPERATIONAL_BUCKET_NAME: ${self:custom.operationalBucketName}-${AWS::Region}-${AWS::AccountId}
-    REGION: ${AWS::Region}
   iamRoleStatements:
     - Effect: Allow
       Action:
