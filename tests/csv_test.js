@@ -47,6 +47,9 @@ describe('CSV', () => {
                 "summary": summary(results),
                 results,
             }
+            console.log(report.summary);
+            console.log(report.results);
+
             expect(report.summary.total).to.equal(4);
             expect(report.summary.failures).to.equal(2);
             expect(report.summary.successes).to.equal(2);
