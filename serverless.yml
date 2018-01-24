@@ -22,7 +22,19 @@ provider:
       Action:
         - lambda:InvokeFunction
       Resource:
-        Fn::Sub: arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:aws-s3cp-bulk-production-copy
+        Fn::Sub: arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:aws-s3cp-bulk-${self:provider.stage}-copy
+    - Effect: Allow
+      Action:
+        - s3:ListBucket
+      Resource:
+        - Fn::Sub: arn:aws:s3:::${self:custom.operationalBucketName}-${AWS::Region}-${AWS::AccountId}-${self:provider.stage}
+        - Fn::Sub: arn:aws:s3:::aws-s3cp-bulk-${AWS::AccountId}-testfixturesbucket
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource:
+        - Fn::Sub: arn:aws:s3:::${self:custom.operationalBucketName}-${AWS::Region}-${AWS::AccountId}-${self:provider.stage}/*
+        - Fn::Sub: arn:aws:s3:::aws-s3cp-bulk-${AWS::AccountId}-testfixturesbucket/*
 
 package:
   exclude:
@@ -46,4 +58,4 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName:
-          Fn::Sub: ${self:custom.operationalBucketName}-${AWS::Region}-${AWS::AccountId}
+          Fn::Sub: ${self:custom.operationalBucketName}-${AWS::Region}-${AWS::AccountId}-${self:provider.stage}
