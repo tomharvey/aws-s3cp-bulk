@@ -11,12 +11,10 @@ provider:
   # https://forum.serverless.com/t/getting-handle-accountid-in-serverless-config/946/7
   variableSyntax: '\${((self|opt):((?!\${).)+?)}'
   runtime: nodejs6.10
-  region: ${opt:region, 'eu-west-1'}
   memorySize: 128
   timeout: 30
   environment:
-    OPERATIONAL_BUCKET_NAME: ${self:custom.operationalBucketName}-${AWS::Region}-${AWS::AccountId}
-    REGION: ${AWS::Region}
+    OPERATIONAL_BUCKET_NAME: Fn::Sub: ${self:custom.operationalBucketName}-$(self:custom.region)-${AWS::AccountId}
   iamRoleStatements:
     - Effect: Allow
       Action:
