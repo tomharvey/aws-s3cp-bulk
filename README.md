@@ -67,7 +67,8 @@ Inside this file you will find a summary object and a detailed list of each file
 copy command's result.
 
 The summary will inform you of the total number of operations, the number of
-successes and the number of failures.
+successes and the number of failures. It will also report on some runtime
+paramaters - the time the process started, and the CSV input file used.
 
 The detail will report the source/destination file pair, along with either
 the ETag of the file on success, or the error message if an error occurred.
