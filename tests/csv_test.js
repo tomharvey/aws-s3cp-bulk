@@ -10,9 +10,14 @@ const invoke = require('../lib/invoke');
 
 describe('CSV', () => {
     it('should get the csv file', (done) => {
-        const csv_path = {
-            'bucket': 'aws-s3cp-bulk-006483271430-testfixturesbucket',
-            'key': 'integration_objects.csv'
+        const key = 'integration_objects.csv'
+        const bucket = 'aws-s3cp-bulk-006483271430-testfixturesbucket'
+        const csv_path = {bucket, key}
+
+        const start_runtime = new Date();
+        const runtime = {
+            'start': start_runtime.toISOString(),
+            'input_file_name': 'integration_objects.csv'
         }
 
         const stream = csv.get_from_s3(csv_path)
@@ -44,7 +49,7 @@ describe('CSV', () => {
 
         invokeQueue.drain = function() {
             const report = {
-                "summary": summary(results),
+                "summary": summary(results, runtime),
                 results,
             }
             console.log(report.summary);
@@ -53,7 +58,10 @@ describe('CSV', () => {
             expect(report.summary.total).to.equal(4);
             expect(report.summary.failures).to.equal(2);
             expect(report.summary.successes).to.equal(2);
-            done()
+            summary.write_report_to_s3(report, bucket, function(err, data) {
+                assert.containsAllKeys((data), ['ETag'])
+                done();
+            })
         };
     })
 })

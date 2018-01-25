@@ -1,7 +1,7 @@
 service: aws-s3cp-bulk
 frameworkVersion: "=1.25.0"
 custom:
-    operationalBucketName: ${opt:bucket-name, 'aws-s3cp-bulk'}
+    operationalBucketPrefix: ${opt:bucket-name, 'aws-s3cp-bulk'}
 
 provider:
   name: aws
@@ -11,9 +11,13 @@ provider:
   # https://forum.serverless.com/t/getting-handle-accountid-in-serverless-config/946/7
   variableSyntax: '\${((self|opt):((?!\${).)+?)}'
   runtime: nodejs6.10
+  stage: ${opt:stage, 'development'}
   region: ${opt:region, 'eu-west-1'}
   memorySize: 128
   timeout: 30
+  environment:
+    OPERATIONAL_BUCKET_PREFIX: ${self:custom.operationalBucketPrefix}
+    STAGE: ${self:provider.stage}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -24,13 +28,13 @@ provider:
       Action:
         - s3:ListBucket
       Resource:
-        - Fn::Sub: arn:aws:s3:::${self:custom.operationalBucketName}-${AWS::Region}-${AWS::AccountId}-${self:provider.stage}
+        - Fn::Sub: arn:aws:s3:::${self:custom.operationalBucketPrefix}-${AWS::Region}-${AWS::AccountId}-${self:provider.stage}
         - Fn::Sub: arn:aws:s3:::aws-s3cp-bulk-${AWS::AccountId}-testfixturesbucket
     - Effect: Allow
       Action:
         - s3:*
       Resource:
-        - Fn::Sub: arn:aws:s3:::${self:custom.operationalBucketName}-${AWS::Region}-${AWS::AccountId}-${self:provider.stage}/*
+        - Fn::Sub: arn:aws:s3:::${self:custom.operationalBucketPrefix}-${AWS::Region}-${AWS::AccountId}-${self:provider.stage}/*
         - Fn::Sub: arn:aws:s3:::aws-s3cp-bulk-${AWS::AccountId}-testfixturesbucket/*
 
 package:
@@ -55,4 +59,4 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName:
-          Fn::Sub: ${self:custom.operationalBucketName}-${AWS::Region}-${AWS::AccountId}-${self:provider.stage}
+          Fn::Sub: ${self:custom.operationalBucketPrefix}-${AWS::Region}-${AWS::AccountId}-${self:provider.stage}

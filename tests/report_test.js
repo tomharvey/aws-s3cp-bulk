@@ -32,11 +32,17 @@ describe ('ReportSummary', () => {
                 "5d41402abc4b2a76b9719d911017c592"
             ]
         ]
+        const runtime = {
+            "start": "2018-01-01T00:00:00",
+            "input_file_name": "/path/to/foo.csv"
+        };
 
-        expect(summary(results)).to.deep.equal({
+        expect(summary(results, runtime)).to.deep.equal({
             "total": 4,
             "failures": 2,
             "successes": 2,
+            "start_runtime": "2018-01-01T00:00:00",
+            "input_file_name": "/path/to/foo.csv"
         })
     });
 
