@@ -26,6 +26,62 @@ module.exports.cp = (event, context, callback) => {
     }
 }
 
+module.exports.bulk_cp = (event, context, callback) => {
+  const start_runtime = new Date();
+  const key = event.data;
+
+  aws_account.get_operational_bucket_name(function(err, data) {
+    console.log(data);
+    const bucket = data;
+    const csv_path = {bucket, key}
+
+    const stream = csv.get_from_s3(csv_path);
+
+    const concurrency = process.env.CONCURRENCY;
+    const queueWorker = (taskdata, callback) => {
+      invoke(taskdata.src, taskdata.dst, callback);
+    };
+    const invokeQueue = async.queue(queueWorker, concurrency);
+
+    let results = [];
+
+    const process_row = (err, data) => {
+      if(err) console.log(err, err.stack);
+      const payload = JSON.parse(data.Payload);
+
+      let result = [];
+      if(payload['errorMessage']) {
+        result = summary.get_result_from_error(payload['errorMessage'])
+      }
+      else {
+        result = summary.get_result_from_success(payload);
+      }
+      results.push(result);
+    }
+
+    csv.parse_csv_from_stream(stream, invokeQueue, process_row);
+
+    const runtime = {
+      'start': start_runtime.toISOString(),
+      'input_file_name': 'integration_objects.csv'
+    }
+
+    invokeQueue.drain = () => {
+      const report = {
+        "summary": summary(results, runtime),
+        results,
+      }
+      console.log(report.summary);
+
+      summary.write_report_to_s3(report, bucket, function(err, data) {
+        if(err) console.log(err, err.stack);
+        console.log(data)
+        callback()
+      })
+    };
+  })
+}
+
 module.exports.integration_test = (event, context, callback) => {
   // TODO: Move this function into the tests folder
   let results = [];

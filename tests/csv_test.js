@@ -31,15 +31,20 @@ describe('CSV', () => {
         let results = [];
 
         const process_row = (err, data) => {
-            if(err) console.log(err, err.stack);
-            const payload = JSON.parse(data.Payload);
-
-            let result = [];
-            if(payload['errorMessage']) {
-                result = summary.get_result_from_error(payload['errorMessage'])
+            if(err) {
+                console.log(err, err.stack);
+                result = {'errorMessage': err}
             }
             else {
-                result = summary.get_result_from_success(payload);
+                const payload = JSON.parse(data.Payload);
+
+                let result = [];
+                if(payload['errorMessage']) {
+                    result = summary.get_result_from_error(payload['errorMessage'])
+                }
+                else {
+                    result = summary.get_result_from_success(payload);
+                }
             }
 
             results.push(result);

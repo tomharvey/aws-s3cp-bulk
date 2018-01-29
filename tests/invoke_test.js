@@ -9,7 +9,7 @@ describe ('Invoke', () => {
         const dst = 'bar'
 
         expect(invoke.get_invoke_params(src, dst)).to.deep.equal({
-            FunctionName: 'aws-s3cp-bulk-production-copy',
+            FunctionName: 'aws-s3cp-bulk-development-copy',
             Payload: JSON.stringify({
                 src: 'foo',
                 dst: 'bar'
