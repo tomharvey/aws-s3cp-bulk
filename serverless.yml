@@ -48,6 +48,8 @@ package:
 functions:
   copy:
     handler: handler.cp
+  bulk-copy:
+    handler: handler.bulk_cp
   integration_test:
     handler: handler.integration_test
     environment:

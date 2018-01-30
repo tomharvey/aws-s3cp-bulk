@@ -3,7 +3,9 @@
 const AWS = require('aws-sdk');
 const async = require('async');
 
+const aws_account = require('./lib/aws-account');
 const copy = require('./lib/copy');
+const csv = require('./lib/csv-processor');
 const verification = require('./lib/verification');
 const invoke = require('./lib/invoke');
 const CopyError = require('./lib/copy-error');
@@ -27,8 +29,9 @@ module.exports.cp = (event, context, callback) => {
 }
 
 module.exports.bulk_cp = (event, context, callback) => {
+  console.log(event);
   const start_runtime = new Date();
-  const key = event.data;
+  const key = event;
 
   aws_account.get_operational_bucket_name(function(err, data) {
     console.log(data);
