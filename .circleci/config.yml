@@ -29,7 +29,6 @@ jobs:
     working_directory: ~/repo
     environment:
       - AWS_REGION: eu-west-1
-      - STAGE: production
     steps:
       - checkout
       - restore_cache:
@@ -45,11 +44,14 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: deploy
-          command: serverless deploy --stage $STAGE --region $AWS_REGION
+          name: deploy_staging
+          command: serverless deploy --stage staging --region $AWS_REGION
       - run:
-          name: verify
-          command: SLS_DEBUG=* serverless invoke --stage $STAGE --function integration_test
+          name: verify_staging
+          command: SLS_DEBUG=* serverless invoke --stage staging --function integration_test
+      - run:
+          name: deploy
+          command: serverless deploy --stage production --region $AWS_REGION
 workflows:
   version: 2
   test-deploy:
