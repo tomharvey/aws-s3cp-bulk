@@ -19,7 +19,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn test
+      - run: AWS_REGION=eu-west-1 yarn test
       - run: sudo npm install -g codeclimate-test-reporter
       - run: codeclimate-test-reporter < coverage/lcov.info
 
