@@ -22,7 +22,8 @@
   },
   "scripts": {
     "test": "find ./tests -name '*_unittest.js' | xargs nyc --reporter=lcov --reporter=text -a mocha --timeout 15000 -R spec",
-    "fulltest": "find ./tests -name '*test.js' | xargs nyc --reporter=lcov --reporter=text -a mocha --timeout 15000 -R spec"
+    "fulltest": "find ./tests -name '*test.js' | xargs nyc --reporter=lcov --reporter=text -a mocha --timeout 15000 -R spec",
+    "lint": "find ./lib/ -name '*.js' | xargs eslint"
   },
   "nyc": {
     "exclude": [
