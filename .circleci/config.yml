@@ -45,10 +45,10 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: deploy_staging
-          command: serverless deploy --stage staging --region $AWS_REGION
+          command: serverless deploy --stage development --region $AWS_REGION
       - run:
           name: verify_staging
-          command: SLS_DEBUG=* serverless invoke --stage staging --function integration_test
+          command: SLS_DEBUG=* serverless invoke --stage development --function integration_test
       - run:
           name: deploy
           command: serverless deploy --stage production --region $AWS_REGION
