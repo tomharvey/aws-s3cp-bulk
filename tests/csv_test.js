@@ -6,7 +6,7 @@ const async = require('async');
 const summary = require('../lib/report-summary');
 const invoke = require('../lib/invoke');
 
-describe('CSV', () => {
+describe('CSV Integration', () => {
   it('should get the csv file', (done) => {
     const key = 'integration_objects.csv';
     const bucket = 'aws-s3cp-bulk-006483271430-testfixturesbucket';

@@ -2,18 +2,7 @@ const { expect, assert } = require('chai');
 
 const copy = require('../lib/copy');
 
-describe('Copy', () => {
-  it('should form the paramaters for the copy operation', () => {
-    const src = 's3://bucket1/key/name.ext';
-    const dst = 's3://bucket2/key/long/name.ext';
-
-    expect(copy.get_cp_params(src, dst)).to.deep.equal({
-      CopySource: '/bucket1/key/name.ext',
-      Bucket: 'bucket2',
-      Key: 'key/long/name.ext',
-    });
-  });
-
+describe('Copy Integration', () => {
   it('should be able to copy a file', (done) => {
     const testbucket = 'aws-s3cp-bulk-006483271430-testfixturesbucket';
     const src = `s3://${testbucket}/testfile_in`;
