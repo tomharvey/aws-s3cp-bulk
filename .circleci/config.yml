@@ -37,7 +37,7 @@ jobs:
           - v1-dependencies-
       - run:
           name: install serverless
-          command: sudo npm install -g serverless
+          command: sudo npm install -g serverless@1.25.0
       - run: yarn install
       - save_cache:
           paths:
