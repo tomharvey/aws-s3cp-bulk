@@ -23,6 +23,13 @@
   "scripts": {
     "test": "find ./tests -name '*_unittest.js' | xargs nyc --reporter=lcov --reporter=text -a mocha --timeout 15000 -R spec"
   },
+  "nyc": {
+    "exclude": [
+      "tests",
+      "coverage",
+      "handler.js"
+    ]
+  },
   "author": "Tom Harvey",
   "license": "ISC",
   "repository": "github:tomharvey/aws-s3cp-bulk"
