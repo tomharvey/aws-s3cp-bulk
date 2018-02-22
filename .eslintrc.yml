@@ -8,6 +8,6 @@ plugins:
 rules:
   no-console: 0
   indent:
-    - 1
+    - 2
     - 2
     - SwitchCase: 1
