@@ -50,7 +50,7 @@
                                "s3:*"
                            ],
                            "Resource": [
-                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-*-", "serverlessdeploymentbuck*"] ]},
+                               { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "ServiceName"}, "-*"] ]},
                                { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "OperationalBucketName"}, "-", {"Ref" : "AWS::AccountId"}, "-", {"Ref" : "AWS::Region"}] ]},
                                { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref" : "OperationalBucketName"}, "-", {"Ref" : "AWS::AccountId"}, "-", {"Ref" : "AWS::Region"}, "/*"] ]}
                            ]
