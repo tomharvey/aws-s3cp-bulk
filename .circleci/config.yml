@@ -19,9 +19,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: AWS_REGION=eu-west-1 yarn test
-      - run: sudo npm install -g codeclimate-test-reporter
-      - run: codeclimate-test-reporter < coverage/lcov.info
+      - run: yarn test
 
   deploy:
     docker:
@@ -46,6 +44,11 @@ jobs:
       - run:
           name: deploy_staging
           command: serverless deploy --force --stage development --region $AWS_REGION
+      - run:
+          name: fulltest
+          command: yarn fulltest
+      - run: sudo npm install -g codeclimate-test-reporter
+      - run: codeclimate-test-reporter < coverage/lcov.info
       # - run:
       #     name: verify_staging
       #     command: SLS_DEBUG=* serverless invoke --stage development --function integration_test
