@@ -1,0 +1,13 @@
+env:
+  jasmine: true
+extends: airbnb
+plugins:
+  - react
+  - jsx-a11y
+  - import
+rules:
+  no-console: 0
+  indent:
+    - 1
+    - 2
+    - SwitchCase: 1

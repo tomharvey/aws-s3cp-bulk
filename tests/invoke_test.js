@@ -1,19 +1,18 @@
-var chai = require('chai');
-var expect = chai.expect;
+const { expect } = require('chai');
 
-var invoke = require('../lib/invoke');
+const invoke = require('../lib/invoke');
 
-describe ('Invoke', () => {
-    it('should generate params to invoke a copy function', () => {
-        const src = 'foo'
-        const dst = 'bar'
+describe('Invoke', () => {
+  it('should generate params to invoke a copy function', () => {
+    const src = 'foo';
+    const dst = 'bar';
 
-        expect(invoke.get_invoke_params(src, dst)).to.deep.equal({
-            FunctionName: 'aws-s3cp-bulk-development-copy',
-            Payload: JSON.stringify({
-                src: 'foo',
-                dst: 'bar'
-            })
-        })
-    })
-})
+    expect(invoke.get_invoke_params(src, dst)).to.deep.equal({
+      FunctionName: 'aws-s3cp-bulk-development-copy',
+      Payload: JSON.stringify({
+        src: 'foo',
+        dst: 'bar',
+      }),
+    });
+  });
+});
