@@ -21,7 +21,8 @@
     "nyc": "^11.4.1"
   },
   "scripts": {
-    "test": "find ./tests -name '*_unittest.js' | xargs nyc --reporter=lcov --reporter=text -a mocha --timeout 15000 -R spec"
+    "test": "find ./tests -name '*_unittest.js' | xargs nyc --reporter=lcov --reporter=text -a mocha --timeout 15000 -R spec",
+    "fulltest": "find ./tests -name '*test.js' | xargs mocha --timeout 15000 -R spec"
   },
   "nyc": {
     "exclude": [
