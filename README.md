@@ -19,13 +19,16 @@ process that pair. Once each pair has been processed, the main function will
 return the statuses of each operation and a summary of success/failures.
 
 ## Quickstart
+
 ### Install
+
 This function relies on [the Serverless framework](http://serverless.com) to
 operate, so install that with `npm install -g serverless`.
 
 Then deploy these aws-s3cp-bulk functions to AWS Lambda with `serverless deploy`
 
 ### Prepare your inputs
+
 The function expects a CSV which contains a list of source and destination files
 for the copy command. How you create this list will depend on your specific
 circumstances, but this file must be uploaded to S3 and made available to the
@@ -44,21 +47,23 @@ This CSV should have 2 columns:
 Your file should **NOT** have a header row, the above is to show the format of
 the file and an example.
 
-
 ### File and Bucket Permissions
+
 Before you run the function, you will need to ensure that you grant the function
 appropriate access to the source files and destination bucket. The function will
-operate using a new IAM role, named along the lines of 
+operate using a new IAM role, named along the lines of
 `aws-s3cp-bulk-development-{AWS::Region}-lambdaRole`
 Add permissions to that role to allow read from the source files and write to
 the destination bucket.
 
-### Run!
+### Running
+
 You can now invoke the function using
 
 `serverless invoke --function bulk-cp --data {LIST_OF_FILES_TO_COPY.CSV}`
 
 ### Results
+
 Results will be generated and written to your 'operational bucket' alongside
 your input file using the naming scheme of
 `./reports/{INPUT_NAME}_report_{YYYY-MM-DDTHH:mm:ss}.json`
@@ -73,8 +78,8 @@ paramaters - the time the process started, and the CSV input file used.
 The detail will report the source/destination file pair, along with either
 the ETag of the file on success, or the error message if an error occurred.
 
+## Why the CSV input approach
 
-## Why the CSV input approach?
 There is a need to feed the command with *large* amounts of data, around
 10million source filenames, each with a destination. This volume of data is too
 large to otherwise feed into the command, and by outputting the results to a
