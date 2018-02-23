@@ -27,7 +27,7 @@
   },
   "nyc": {
     "exclude": [
-      "tests",
+      "*test.js",
       "coverage",
       "handler.js"
     ]
