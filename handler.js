@@ -102,6 +102,7 @@ const addtestFixture = () => {
 };
 
 module.exports.integration_test = (event, context, callback) => {
+  const startRuntime = new Date();
   const results = [];
 
   addtestFixture();
@@ -132,8 +133,13 @@ module.exports.integration_test = (event, context, callback) => {
     invokeQueue.push({ src: 'foo', dst: 'bar' }, thisCallback);
 
     invokeQueue.drain = () => {
+      const runtime = {
+        start: startRuntime.toISOString(),
+        input_file_name: 'integration-test',
+      };
+
       const report = {
-        summary: summary(results),
+        summary: summary(results, runtime),
         results,
       };
       return callback(null, report);
