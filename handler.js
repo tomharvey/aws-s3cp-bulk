@@ -80,16 +80,24 @@ module.exports.bulk_cp = (event, context, callback) => {
 };
 
 const addtestFixture = () => {
-  const region = process.env.AWS_REGION;
-  AWS.config.update({ region });
+  console.log('Adding fixture file to test bucket');
 
-  const s3 = new AWS.S3();
+  awsAccount.get_operational_bucket_name((bucketErr, bucketName) => {
+    if (bucketErr) console.log(bucketErr, bucketErr.stack);
+    else console.log(`Working with bucket ${bucketName}`);
 
-  const testbucket = process.env.OPERATIONAL_BUCKET;
-  const key = '/tests/testfile_in';
-  const params = { Bucket: testbucket, Key: key, Body: 'testing' };
-  s3.upload(params, (err, data) => {
-    console.log(err, data);
+    const region = process.env.AWS_REGION;
+    AWS.config.update({ region });
+
+    const s3 = new AWS.S3();
+
+    const key = '/tests/testfile_in';
+
+    const params = { Bucket: bucketName, Key: key, Body: 'testing' };
+    s3.upload(params, (err, data) => {
+      if (err) console.log(err, err.stack);
+      else console.log(data);
+    });
   });
 };
 
@@ -118,17 +126,17 @@ module.exports.integration_test = (event, context, callback) => {
   };
   const invokeQueue = async.queue(queueWorker, concurrency);
 
-  const testbucket = process.env.OPERATIONAL_BUCKET;
+  awsAccount.get_operational_bucket_name((bucketErr, bucketName) => {
+    invokeQueue.push({ src: `s3://${bucketName}/tests/testfile_in`, dst: `s3://${bucketName}/tests/testfile_out` }, thisCallback);
+    invokeQueue.push({ src: `s3://${bucketName}/non-existant-in`, dst: `s3://${bucketName}/non-existant-out` }, thisCallback);
+    invokeQueue.push({ src: 'foo', dst: 'bar' }, thisCallback);
 
-  invokeQueue.push({ src: `s3://${testbucket}/tests/testfile_in`, dst: `s3://${testbucket}/tests/testfile_out` }, thisCallback);
-  invokeQueue.push({ src: `s3://${testbucket}/non-existant-in`, dst: `s3://${testbucket}/non-existant-out` }, thisCallback);
-  invokeQueue.push({ src: 'foo', dst: 'bar' }, thisCallback);
-
-  invokeQueue.drain = () => {
-    const report = {
-      summary: summary(results),
-      results,
+    invokeQueue.drain = () => {
+      const report = {
+        summary: summary(results),
+        results,
+      };
+      return callback(null, report);
     };
-    return callback(null, report);
-  };
+  });
 };
