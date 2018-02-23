@@ -39,6 +39,7 @@ provider:
 
 package:
   exclude:
+    - tests/**
     - coverage/**
     - .nyc_output/**
     - .serverless/**
