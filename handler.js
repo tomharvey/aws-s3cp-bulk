@@ -93,7 +93,7 @@ const addtestFixture = () => {
   });
 };
 
-module.exports = (event, context, callback) => {
+module.exports.integration_test = (event, context, callback) => {
   const results = [];
 
   addtestFixture();
