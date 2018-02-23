@@ -143,12 +143,12 @@ module.exports.integration_test = (event, context, callback) => {
         results,
       };
 
-      const expectedReport = (report.summary.total === 2) || (report.summary.successes === 1);
+      const expectedReport = (report.summary.total === 3) || (report.summary.successes === 1);
       if (expectedReport) {
         return callback(null, report);
       }
 
-      return callback(new CopyError('The report did not match the expected', report), report);
+      return callback(new CopyError('The report did not match the expected', report));
     };
   });
 };
