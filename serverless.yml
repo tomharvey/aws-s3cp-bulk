@@ -51,7 +51,7 @@ functions:
   bulk-copy:
     handler: handler.bulk_cp
   integration_test:
-    handler: tests.integration_test
+    handler: lib.integration_test
     environment:
       CONCURRENCY: ${opt:concurrency, '500'}
       OPERATIONAL_BUCKET: ${self:custom.operationalBucketPrefix}-${AWS::Region}-${AWS::AccountId}-${self:provider.stage}
