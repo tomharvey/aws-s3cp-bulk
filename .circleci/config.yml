@@ -50,9 +50,9 @@ jobs:
           command: yarn fulltest
       - run: sudo npm install -g codeclimate-test-reporter
       - run: codeclimate-test-reporter < coverage/lcov.info
-      # - run:
-      #     name: verify_staging
-      #     command: SLS_DEBUG=* serverless invoke --stage development --function integration_test
+      - run:
+          name: verify_staging
+          command: SLS_DEBUG=* serverless invoke --stage development --function integration_test
       - run:
           name: deploy
           command: serverless deploy --stage production --region $AWS_REGION
