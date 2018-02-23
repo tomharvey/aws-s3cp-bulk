@@ -91,7 +91,7 @@ const addtestFixture = () => {
 
     const s3 = new AWS.S3();
 
-    const key = '/tests/testfile_in';
+    const key = 'tests/testfile_in';
 
     const params = { Bucket: bucketName, Key: key, Body: 'testing' };
     s3.upload(params, (err, data) => {
