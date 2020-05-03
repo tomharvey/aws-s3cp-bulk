@@ -7,7 +7,8 @@
     "async": "^2.6.0",
     "aws-sdk": "^2.175.0",
     "fast-csv": "^2.4.1",
-    "url-parse": "^1.2.0"
+    "url-parse": "^1.2.0",
+    "snyk": "^1.316.2"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -23,7 +24,9 @@
   "scripts": {
     "test": "find ./tests -name '*_unittest.js' | xargs nyc --reporter=lcov --reporter=text -a mocha --timeout 15000 -R spec",
     "fulltest": "find ./tests -name '*test.js' | xargs nyc --reporter=lcov --reporter=text -a mocha --timeout 15000 -R spec",
-    "lint": "find ./lib/ -name '*.js' | xargs eslint"
+    "lint": "find ./lib/ -name '*.js' | xargs eslint",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "nyc": {
     "exclude": [
@@ -34,5 +37,6 @@
   },
   "author": "Tom Harvey",
   "license": "ISC",
-  "repository": "github:tomharvey/aws-s3cp-bulk"
+  "repository": "github:tomharvey/aws-s3cp-bulk",
+  "snyk": true
 }
